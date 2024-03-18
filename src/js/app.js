@@ -100,29 +100,6 @@ class UI {
 
   addCartItem(item) {
 
-
-    // let result = "";
-
-    // cart.forEach((item) => {
-    //   result += `
-    //   <div class="cart-item">
-    //     <img src="${item.imageUrl}" alt="" class="cart-item-img">
-    //     <div class="cart-item-desc">
-    //          <h4>${item.title}</h4>
-    //         <h5>$ ${item.price}</h5>
-    //     </div>
-    //     <div class="cart-conteoller">
-    //         <i class='bx bxs-chevron-up up' data-id="${item.id}"></i>
-    //         <p>${item.quantity}</p>
-    //         <i class='bx bxs-chevron-down down' data-id="${item.id}"></i>
-    //     </div>
-    //     <i class='bx bxs-trash trash' data-id="${item.id}"></i>
-    //   </div>
-    // `;
-    //   productsDOM.innerHTML = result;
-    // });
-
-
     const div = document.createElement("div");
     div.classList.add("cart-item");
 
@@ -161,7 +138,7 @@ class UI {
         const addQuantity = e.target;
         // 1. get item from cart
         const addedItem = cart.find(
-          (cItem) => cItem.id === addQuantity.dataset.id
+          (cItem) => cItem.id === +addQuantity.dataset.id
         );
         // 2. updat
         addedItem.quantity++;
@@ -173,7 +150,7 @@ class UI {
       } else if (e.target.classList.contains("trash")) {
         const removeItem = e.target;
         const removedItem = cart.find(
-          (cItem) => cItem.id === removeItem.dataset.id
+          (cItem) => cItem.id === +removeItem.dataset.id
         );
         this.removeItem(removedItem.id);
         removeItem.parentElement.remove();
@@ -184,10 +161,10 @@ class UI {
         const subQuantity = e.target;
 
         const removedItem = cart.find(
-          (cItem) => cItem.id === subQuantity.dataset.id
+          (cItem) => cItem.id === +subQuantity.dataset.id
         );
 
-        if (removedItem.quantity < 1) {
+        if (removedItem.quantity <= 1) {
           this.removeItem(removedItem.id);
           subQuantity.parentElement.parentElement.remove();
           // closeModalFunc()
@@ -226,7 +203,7 @@ class UI {
 
   getSingleButton(id) {
     const button = buttonsDOM.find(
-      (btn) => btn.dataset.id === parseInt(id) 
+      (btn) => btn.dataset.id == parseInt(id) 
     );
     button.innerHTML = `<i class='bx bxs-cart-alt'></i> add to cart`;
     button.disabled = false;
